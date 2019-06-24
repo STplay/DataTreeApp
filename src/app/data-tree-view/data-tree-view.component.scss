@@ -1,0 +1,39 @@
+
+
+.cat-tree-invisible {
+    display: none;
+  }
+  
+  .cat-tree ul,
+  .cat-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  .cat-tree-node {
+    display: block;
+    color: blue;
+  }
+  
+  .cat-tree-node .cat-tree-node {
+    padding-left: 40px;    
+  }
+
+  
+  .expandednode {
+    color:purple;
+    font-weight: 400;
+    font-size: medium;
+  }
+  .expandablenode {
+    color: blue;
+    font-weight: 400;
+    font-size: medium;
+  } 
+  
+.cat-caption {
+  color: maroon;
+  font-weight: 600;
+  font-style: italic;
+}
+  

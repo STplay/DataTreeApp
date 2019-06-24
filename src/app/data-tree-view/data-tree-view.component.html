@@ -1,0 +1,51 @@
+<p class="cat-caption">
+  Categories :  
+</p>
+
+<mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="cat-tree">
+  <!-- for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      <button mat-icon-button disabled> {{bTrueNode(node) ? '=':''}} </button>
+      {{getNodeName(node)}}  
+      <!-- add node to (currently) a leaf node -->    
+      <button mat-icon-button (click)="addNewItem(node)"><mat-icon>{{bTrueNode(node)  ? 'add':''}} </mat-icon></button>      
+  </mat-tree-node>
+
+  <!-- for adding new node  -->
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNoContent" >    
+      <button  mat-icon-button disabled></button>        
+      <mat-form-field>
+        <input matInput #itemValue placeholder="New item..." >  
+      </mat-form-field>
+      <i>under    {{getNodeName(currentNode)}} </i>
+      <button mat-icon-button       (click)="saveNode(node, itemValue.value)">
+        <mat-icon class="mat-icon-rtl-mirror"> done </mat-icon>
+      </button>
+      <button mat-icon-button  (click)="cancelNew(node, itemValue.value)">
+        <mat-icon class="mat-icon-rtl-mirror"> close </mat-icon>
+      </button>    
+    </mat-nested-tree-node>
+  
+ <!-- for compound nodes with children -->
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+    <li>
+      <div class="mat-tree-node">        
+        <button mat-icon-button matTreeNodeToggle            
+                [attr.aria-label]="'toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}} 
+          </mat-icon>
+        </button>
+        <div [class]="nestedTreeControl.isExpanded(node) ? 'expandednode' : 'expandablenode'">
+        {{getNodeName(node)}}  
+        </div>
+        <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
+      </div>
+
+      <ul [class.cat-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </ul>
+    </li>
+  </mat-nested-tree-node>
+
+</mat-tree>
